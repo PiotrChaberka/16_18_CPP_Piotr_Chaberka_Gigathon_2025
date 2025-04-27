@@ -60,7 +60,7 @@
 
 # **Opis kodu źródłowego**
 
-**Kod gry napisany jest w C++ i zawiera szczegółowe komentarze opisujące każdą klasę oraz metodę. Główne klasy w kodzie:**
+**Kod gry napisany jest w C++ i zawiera komentarze opisujące każdą klasę oraz metodę. Główne klasy w kodzie:**
 
 **Karta: Reprezentuje pojedynczą kartę z jej wartością i kolorem.**
 
