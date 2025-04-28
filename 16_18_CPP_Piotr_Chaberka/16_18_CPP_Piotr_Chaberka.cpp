@@ -20,6 +20,7 @@ using namespace std;
 // Definicje kolorów i wartości kart
 enum KolorKarty { KIER, KARO, PIK, TREFL };
 enum WartoscKarty { AS = 1, DWA, TRZY, CZTERY, PIEC, SZESC, SIEDEM, OSIEM, DZIEWIEC, DZIESIEC, WALET, DAMA, KROL };
+string wynik_txt = "wyniki_solitaire.txt";
 
 // Struktura karty
 struct Karta {
@@ -152,7 +153,7 @@ private:
 
     // Zapis wyniku do pliku
     void ZapiszWynik() {
-        ofstream plik("wyniki_solitaire.txt", ios::app);
+        ofstream plik(wynik_txt, ios::app);
         if (!plik.is_open()) {
             cout << "Nie można otworzyć pliku wyników!\n";
             return;
@@ -771,7 +772,7 @@ private:
         cout << "   DODAWANIE TESTOWYCH WYNIKÓW\n";
         cout << "=========================\n\n";
 
-        ofstream plik("wyniki_solitaire.txt", ios::app);
+        ofstream plik(wynik_txt, ios::app);
         if (!plik.is_open()) {
             cout << "Nie można otworzyć pliku wyników!\n";
             cout << "Naciśnij Enter, aby wrócić do menu...";
