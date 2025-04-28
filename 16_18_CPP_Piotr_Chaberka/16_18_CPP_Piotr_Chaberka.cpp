@@ -89,15 +89,15 @@ private:
 
         switch (karta.Kolor) {
         case KIER:
-            symbolKoloru = "♥";
+            symbolKoloru = u8"♥";
             JestCzerwony = true;
             break;
         case KARO:
-            symbolKoloru = "♦";
+            symbolKoloru = u8"♦";
             JestCzerwony = true;
             break;
-        case PIK: symbolKoloru = "♠"; break;
-        case TREFL: symbolKoloru = "♣"; break;
+        case PIK: symbolKoloru = u8"♠"; break;
+        case TREFL: symbolKoloru = u8"♣"; break;
         }
 
         #ifdef _WIN32
