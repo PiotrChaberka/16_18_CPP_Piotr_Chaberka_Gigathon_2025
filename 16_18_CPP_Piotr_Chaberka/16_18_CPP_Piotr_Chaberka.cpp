@@ -72,7 +72,7 @@ private:
     // Wyświetlanie karty z odpowiednim kolorem
     void WyswietlKarte(const Karta& karta) {
         if (!karta.JestOdkryta) {
-            cout << "[XX]";
+            cout << "[X/X]";
             return;
         }
 
@@ -441,55 +441,59 @@ public:
         return true;
     }
 
-    // Cofanie ostatniego ruchu
-    bool CofnijRuch() {
-        if (HistoriaRuchow.empty()) {
-            return false;
-        }
-
-        Ruch ostatniRuch = HistoriaRuchow.top();
-        HistoriaRuchow.pop();
-
-        if (ostatniRuch.ZrodloTyp == 0 && ostatniRuch.CelTyp == 0) {
-            for (int i = 0; i < ostatniRuch.LiczbaKart; i++) {
-                if (KolumnyGry[ostatniRuch.CelIndex].empty()) {
-                    break;
-                }
-                KolumnyGry[ostatniRuch.ZrodloIndex].push_back(KolumnyGry[ostatniRuch.CelIndex].back());
-                KolumnyGry[ostatniRuch.CelIndex].pop_back();
-            }
-            if (!KolumnyGry[ostatniRuch.CelIndex].empty() && KolumnyGry[ostatniRuch.CelIndex].back().JestOdkryta) {
-                bool bylJedynaOdkryta = true;
-                for (size_t i = 0; i < KolumnyGry[ostatniRuch.CelIndex].size() - 1; i++) {
-                    if (KolumnyGry[ostatniRuch.CelIndex][i].JestOdkryta) {
-                        bylJedynaOdkryta = false;
-                        break;
-                    }
-                }
-                if (bylJedynaOdkryta) {
-                    KolumnyGry[ostatniRuch.CelIndex].back().JestOdkryta = false;
-                }
-            }
-        } else if (ostatniRuch.ZrodloTyp == 0 && ostatniRuch.CelTyp == 1) {
-            if (!StosyKoncowe[ostatniRuch.CelIndex].empty()) {
-                KolumnyGry[ostatniRuch.ZrodloIndex].push_back(StosyKoncowe[ostatniRuch.CelIndex].back());
-                StosyKoncowe[ostatniRuch.CelIndex].pop_back();
-            }
-        } else if (ostatniRuch.ZrodloTyp == 1 && ostatniRuch.CelTyp == 0) {
-            if (!KolumnyGry[ostatniRuch.CelIndex].empty()) {
-                StosWidoczny.push_back(KolumnyGry[ostatniRuch.CelIndex].back());
-                KolumnyGry[ostatniRuch.CelIndex].pop_back();
-            }
-        } else if (ostatniRuch.ZrodloTyp == 1 && ostatniRuch.CelTyp == 1) {
-            if (!StosyKoncowe[ostatniRuch.CelIndex].empty()) {
-                StosWidoczny.push_back(StosyKoncowe[ostatniRuch.CelIndex].back());
-                StosyKoncowe[ostatniRuch.CelIndex].pop_back();
-            }
-        }
-
-        LiczbaRuchow--;
-        return true;
+// Cofanie ostatniego ruchu
+bool CofnijRuch() {
+    if (HistoriaRuchow.empty()) {
+        return false;
     }
+
+    Ruch ostatniRuch = HistoriaRuchow.top();
+    HistoriaRuchow.pop();
+
+    if (ostatniRuch.ZrodloTyp == 0 && ostatniRuch.CelTyp == 0) {
+        // Cofanie ruchu między kolumnami
+        for (int i = 0; i < ostatniRuch.LiczbaKart; i++) {
+            if (KolumnyGry[ostatniRuch.CelIndex].empty()) {
+                break;
+            }
+            KolumnyGry[ostatniRuch.ZrodloIndex].push_back(KolumnyGry[ostatniRuch.CelIndex].back());
+            KolumnyGry[ostatniRuch.CelIndex].pop_back();
+        }
+        // Ustaw wierzchnią kartę w kolumnie docelowej jako odkrytą, jeśli kolumna nie jest pusta
+        if (!KolumnyGry[ostatniRuch.CelIndex].empty()) {
+            KolumnyGry[ostatniRuch.CelIndex].back().JestOdkryta = true;
+        }
+        // Upewnij się, że w kolumnie źródłowej wierzchnia karta jest odkryta
+        if (!KolumnyGry[ostatniRuch.ZrodloIndex].empty()) {
+            KolumnyGry[ostatniRuch.ZrodloIndex].back().JestOdkryta = true;
+        }
+    } else if (ostatniRuch.ZrodloTyp == 0 && ostatniRuch.CelTyp == 1) {
+        // Cofanie ruchu z kolumny na stos końcowy
+        if (!StosyKoncowe[ostatniRuch.CelIndex].empty()) {
+            KolumnyGry[ostatniRuch.ZrodloIndex].push_back(StosyKoncowe[ostatniRuch.CelIndex].back());
+            StosyKoncowe[ostatniRuch.CelIndex].pop_back();
+            KolumnyGry[ostatniRuch.ZrodloIndex].back().JestOdkryta = true; // Wierzchnia karta odkryta
+        }
+    } else if (ostatniRuch.ZrodloTyp == 1 && ostatniRuch.CelTyp == 0) {
+        // Cofanie ruchu ze stosu widocznego do kolumny
+        if (!KolumnyGry[ostatniRuch.CelIndex].empty()) {
+            StosWidoczny.push_back(KolumnyGry[ostatniRuch.CelIndex].back());
+            KolumnyGry[ostatniRuch.CelIndex].pop_back();
+            if (!KolumnyGry[ostatniRuch.CelIndex].empty()) {
+                KolumnyGry[ostatniRuch.CelIndex].back().JestOdkryta = true; // Wierzchnia karta odkryta
+            }
+        }
+    } else if (ostatniRuch.ZrodloTyp == 1 && ostatniRuch.CelTyp == 1) {
+        // Cofanie ruchu ze stosu widocznego na stos końcowy
+        if (!StosyKoncowe[ostatniRuch.CelIndex].empty()) {
+            StosWidoczny.push_back(StosyKoncowe[ostatniRuch.CelIndex].back());
+            StosyKoncowe[ostatniRuch.CelIndex].pop_back();
+        }
+    }
+
+    LiczbaRuchow--;
+    return true;
+}
 
     // Sprawdzanie czy gra została wygrana
     bool SprawdzWygrana() {
@@ -542,7 +546,8 @@ public:
             else if (Komenda == "cofnij" || Komenda == "Cofnij" || Komenda == "COFNIJ") {
                 if (!CofnijRuch()) {
                     cout << "Brak ruchów do cofnięcia!\n";
-                    cin.get();
+                    Sleep(1200);
+                    //cin.get();
                 }
             }
             else if (Komenda == "restart" || Komenda == "Restart" || Komenda == "RESTART") {
@@ -556,11 +561,13 @@ public:
                 if (sscanf(Komenda.c_str(), "kk %d %d %d", &zKolumny, &doKolumny, &ileKart) == 3) {
                     if (!PrzeniesKartyMiedzyKolumnami(zKolumny, doKolumny, ileKart)) {
                         cout << "Nieprawidłowy ruch!\n";
-                        cin.get();
+                        Sleep(1200);
+                        //cin.get();
                     }
                 } else {
                     cout << "Nieprawidłowa składnia! Użyj: kk [z] [do] [ile]\n";
-                    cin.get();
+                    Sleep(1200);
+                    //cin.get();
                 }
             }
             else if (Komenda.substr(0, 2) == "wk" || Komenda.substr(0, 2) == "WK" || Komenda.substr(0, 2) == "Wk") {
@@ -568,11 +575,13 @@ public:
                 if (sscanf(Komenda.c_str(), "wk %d", &doKolumny) == 1) {
                     if (!PrzeniesKarteZeStosWidocznegoDoKolumny(doKolumny)) {
                         cout << "Nieprawidłowy ruch!\n";
-                        cin.get();
+                        Sleep(1200);
+                        //cin.get();
                     }
                 } else {
                     cout << "Nieprawidłowa składnia! Użyj: wk [kolumna]\n";
-                    cin.get();
+                    Sleep(1200);
+                    //cin.get();
                 }
             }
             else if (Komenda.substr(0, 1) == "s" || Komenda.substr(0, 1) == "S") {
@@ -582,30 +591,36 @@ public:
                     if (zrodlo == 'k' || zrodlo == 'K') {
                         if (!PrzeniesKarteNaStosKoncowy(0, zrodloIndex)) {
                             cout << "Nieprawidłowy ruch!\n";
-                            cin.get();
+                            Sleep(1200);
+                            //cin.get();
                         }
                     } else {
                         cout << "Nieprawidłowa składnia! Użyj: s k[1-7] lub s w\n";
-                        cin.get();
+                        Sleep(1200);
+                        //cin.get();
                     }
                 } else if (sscanf(Komenda.c_str(), "s %c", &zrodlo) == 1) {
                     if (zrodlo == 'w' || zrodlo == 'W') {
                         if (!PrzeniesKarteNaStosKoncowy(1, 1)) {
                             cout << "Nieprawidłowy ruch!\n";
-                            cin.get();
+                            Sleep(1200);
+                            //cin.get();
                         }
                     } else {
                         cout << "Nieprawidłowa składnia! Użyj: s k[1-7] lub s w\n";
-                        cin.get();
+                        Sleep(1200);
+                        //cin.get();
                     }
                 } else {
                     cout << "Nieprawidłowa składnia! Użyj: s k[1-7] lub s w\n";
-                    cin.get();
+                    Sleep(1200);
+                    //cin.get();
                 }
             }
             else {
                 cout << "Nieznana komenda. Wpisz 'pomoc', aby zobaczyć dostępne komendy.\n";
-                cin.get();
+                Sleep(1200);
+                //cin.get(); // Z deszczu pod rynne. Jedni mówią, że sleep jest bardziej intuicyjne a inni że cin.get
             }
         }
     }
