@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "C:/Users/piotr/Pulpit/PythonPrograms/OI2024 + GIT/16_18_CPP_Piotr_Chaberka_Gigathon_2025/16_18_CPP_Piotr_Chaberka")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "C:/Users/piotr/Pulpit/PythonPrograms/OI2024 + GIT/16_18_CPP_Piotr_Chaberka_Gigathon_2025/16_18_CPP_Piotr_Chaberka/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "C:/Users/piotr/Pulpit/PythonPrograms/OI2024 + GIT/16_18_CPP_Piotr_Chaberka_Gigathon_2025/16_18_CPP_Piotr_Chaberka")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

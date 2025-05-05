@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\SolitaireGame.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\SolitaireGame.dir/objects.a @CMakeFiles\SolitaireGame.dir\objects1.rsp
+C:\msys64\ucrt64\bin\c++.exe  -static -static-libgcc -static-libstdc++ -Wl,--whole-archive CMakeFiles\SolitaireGame.dir/objects.a -Wl,--no-whole-archive -o SolitaireGame.exe -Wl,--out-implib,libSolitaireGame.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\SolitaireGame.dir\linkLibs.rsp

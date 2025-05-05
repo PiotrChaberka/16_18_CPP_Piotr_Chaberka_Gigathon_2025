@@ -56,7 +56,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = "C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\build"
+CMAKE_BINARY_DIR = "C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -84,14 +84,14 @@ clean: CMakeFiles/SolitaireGame.dir/clean
 CMakeFiles/SolitaireGame.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SolitaireGame.dir\build.make CMakeFiles/SolitaireGame.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SolitaireGame.dir\build.make CMakeFiles/SolitaireGame.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\build\CMakeFiles" --progress-num=1,2 "Built target SolitaireGame"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\CMakeFiles" --progress-num=1,2 "Built target SolitaireGame"
 .PHONY : CMakeFiles/SolitaireGame.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/SolitaireGame.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\build\CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/SolitaireGame.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\build\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\CMakeFiles" 0
 .PHONY : CMakeFiles/SolitaireGame.dir/rule
 
 # Convenience name for target.
@@ -101,7 +101,7 @@ SolitaireGame: CMakeFiles/SolitaireGame.dir/rule
 # codegen rule for target.
 CMakeFiles/SolitaireGame.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SolitaireGame.dir\build.make CMakeFiles/SolitaireGame.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\build\CMakeFiles" --progress-num=1,2 "Finished codegen for target SolitaireGame"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\piotr\Pulpit\PythonPrograms\OI2024 + GIT\16_18_CPP_Piotr_Chaberka_Gigathon_2025\16_18_CPP_Piotr_Chaberka\CMakeFiles" --progress-num=1,2 "Finished codegen for target SolitaireGame"
 .PHONY : CMakeFiles/SolitaireGame.dir/codegen
 
 # clean rule for target.

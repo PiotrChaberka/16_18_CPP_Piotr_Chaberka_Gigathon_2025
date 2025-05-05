@@ -122,11 +122,11 @@ set(CMAKE_MAKEFILE_DEPENDS
   "C:/Program Files/CMake/share/cmake-4.0/Modules/Platform/Windows-windres.cmake"
   "C:/Program Files/CMake/share/cmake-4.0/Modules/Platform/Windows.cmake"
   "C:/Program Files/CMake/share/cmake-4.0/Modules/Platform/WindowsPaths.cmake"
-  "C:/Users/piotr/Pulpit/PythonPrograms/OI2024 + GIT/16_18_CPP_Piotr_Chaberka_Gigathon_2025/16_18_CPP_Piotr_Chaberka/CMakeLists.txt"
   "CMakeFiles/4.0.1/CMakeCCompiler.cmake"
   "CMakeFiles/4.0.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.0.1/CMakeRCCompiler.cmake"
   "CMakeFiles/4.0.1/CMakeSystem.cmake"
+  "CMakeLists.txt"
   )
 
 # The corresponding makefile is:
