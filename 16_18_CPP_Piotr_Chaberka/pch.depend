@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1746512946 source:c:\users\piotr\pulpit\pythonprograms\oi2024 + git\16_18_cpp_piotr_chaberka_gigathon_2025\16_18_cpp_piotr_chaberka\16_18_cpp_piotr_chaberka.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+	<random>
+	<stack>
+	<string>
+	<cstdlib>
+	<ctime>
+	<deque>
+	<fstream>
+	<iomanip>
+	<sstream>
+	<windows.h>
+

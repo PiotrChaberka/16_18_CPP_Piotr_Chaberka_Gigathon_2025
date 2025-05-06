@@ -450,25 +450,63 @@ bool CofnijRuch() {
     Ruch ostatniRuch = HistoriaRuchow.top();
     HistoriaRuchow.pop();
 
-    if (ostatniRuch.ZrodloTyp == 0 && ostatniRuch.CelTyp == 0) {
+    if (ostatniRuch.ZrodloTyp == 3) {
+        // Cofanie ruchu dk
+        int liczbaKart = ostatniRuch.LiczbaKart;
+        if (StosWidoczny.empty()) {
+            // Jeśli stos widoczny jest pusty, to ruch dk przywrócił karty z widocznego do rezerwowego
+            for (int i = 0; i < liczbaKart && !StosRezerwowy.empty(); i++) {
+                Karta karta = StosRezerwowy.front();
+                StosRezerwowy.pop_front();
+                karta.JestOdkryta = true;
+                StosWidoczny.push_back(karta);
+            }
+        } else {
+            // Cofnij dobranie kart z rezerwowego do widocznego
+            for (int i = 0; i < liczbaKart && !StosWidoczny.empty(); i++) {
+                Karta karta = StosWidoczny.back();
+                StosWidoczny.pop_back();
+                karta.JestOdkryta = false;
+                StosRezerwowy.push_front(karta);
+            }
+        }
+    } else if (ostatniRuch.ZrodloTyp == 0 && ostatniRuch.CelTyp == 0) {
         // Cofanie ruchu między kolumnami
-        for (int i = 0; i < ostatniRuch.LiczbaKart; i++) {
+        int liczbaKart = ostatniRuch.LiczbaKart;
+        vector<Karta> tymczasoweKarty;
+        // Pobierz karty z kolumny docelowej do tymczasowego kontenera
+        for (int i = 0; i < liczbaKart; i++) {
             if (KolumnyGry[ostatniRuch.CelIndex].empty()) {
                 break;
             }
-            KolumnyGry[ostatniRuch.ZrodloIndex].push_back(KolumnyGry[ostatniRuch.CelIndex].back());
+            tymczasoweKarty.push_back(KolumnyGry[ostatniRuch.CelIndex].back());
             KolumnyGry[ostatniRuch.CelIndex].pop_back();
         }
-
-        // Ustaw w kolumnie źródłowej: tylko wierzchnia karta odkryta, reszta zakryta
-        if (!KolumnyGry[ostatniRuch.ZrodloIndex].empty()) {
-            for (size_t i = 0; i < KolumnyGry[ostatniRuch.ZrodloIndex].size() - 1; i++) {
-                KolumnyGry[ostatniRuch.ZrodloIndex][i].JestOdkryta = false;
-            }
-            KolumnyGry[ostatniRuch.ZrodloIndex].back().JestOdkryta = true;
+        // Wstaw karty do kolumny źródłowej w odwrotnej kolejności
+        for (int i = tymczasoweKarty.size() - 1; i >= 0; i--) {
+            KolumnyGry[ostatniRuch.ZrodloIndex].push_back(tymczasoweKarty[i]);
         }
 
-        // Ustaw w kolumnie docelowej: tylko wierzchnia karta odkryta, reszta zakryta
+        // Popraw stan odkrycia w kolumnie źródłowej
+        if (!KolumnyGry[ostatniRuch.ZrodloIndex].empty()) {
+            size_t indeksStartu = KolumnyGry[ostatniRuch.ZrodloIndex].size() - liczbaKart - 1;
+            if (indeksStartu < KolumnyGry[ostatniRuch.ZrodloIndex].size()) {
+                for (size_t i = 0; i < indeksStartu + 1 && i < KolumnyGry[ostatniRuch.ZrodloIndex].size(); i++) {
+                    KolumnyGry[ostatniRuch.ZrodloIndex][i].JestOdkryta = false;
+                }
+                for (size_t i = indeksStartu + 1; i < KolumnyGry[ostatniRuch.ZrodloIndex].size(); i++) {
+                    KolumnyGry[ostatniRuch.ZrodloIndex][i].JestOdkryta = true;
+                }
+            } else {
+                // Jeśli indeksStartu jest poza zakresem, ustaw tylko wierzchnią kartę jako odkrytą
+                for (size_t i = 0; i < KolumnyGry[ostatniRuch.ZrodloIndex].size() - 1; i++) {
+                    KolumnyGry[ostatniRuch.ZrodloIndex][i].JestOdkryta = false;
+                }
+                KolumnyGry[ostatniRuch.ZrodloIndex].back().JestOdkryta = true;
+            }
+        }
+
+        // Popraw stan odkrycia w kolumnie docelowej
         if (!KolumnyGry[ostatniRuch.CelIndex].empty()) {
             for (size_t i = 0; i < KolumnyGry[ostatniRuch.CelIndex].size() - 1; i++) {
                 KolumnyGry[ostatniRuch.CelIndex][i].JestOdkryta = false;
@@ -481,12 +519,23 @@ bool CofnijRuch() {
             KolumnyGry[ostatniRuch.ZrodloIndex].push_back(StosyKoncowe[ostatniRuch.CelIndex].back());
             StosyKoncowe[ostatniRuch.CelIndex].pop_back();
 
-            // Ustaw w kolumnie źródłowej: tylko wierzchnia karta odkryta, reszta zakryta
+            // Popraw stan odkrycia w kolumnie źródłowej
             if (!KolumnyGry[ostatniRuch.ZrodloIndex].empty()) {
-                for (size_t i = 0; i < KolumnyGry[ostatniRuch.ZrodloIndex].size() - 1; i++) {
+                size_t pierwszaOdkryta = 0;
+                for (size_t i = 0; i < KolumnyGry[ostatniRuch.ZrodloIndex].size(); i++) {
+                    if (i == KolumnyGry[ostatniRuch.ZrodloIndex].size() - 1) {
+                        KolumnyGry[ostatniRuch.ZrodloIndex][i].JestOdkryta = true;
+                    } else if (!MoznaPolozyc(KolumnyGry[ostatniRuch.ZrodloIndex][i], KolumnyGry[ostatniRuch.ZrodloIndex][i + 1])) {
+                        pierwszaOdkryta = i + 1;
+                        break;
+                    }
+                }
+                for (size_t i = 0; i < pierwszaOdkryta; i++) {
                     KolumnyGry[ostatniRuch.ZrodloIndex][i].JestOdkryta = false;
                 }
-                KolumnyGry[ostatniRuch.ZrodloIndex].back().JestOdkryta = true;
+                for (size_t i = pierwszaOdkryta; i < KolumnyGry[ostatniRuch.ZrodloIndex].size(); i++) {
+                    KolumnyGry[ostatniRuch.ZrodloIndex][i].JestOdkryta = true;
+                }
             }
         }
     } else if (ostatniRuch.ZrodloTyp == 1 && ostatniRuch.CelTyp == 0) {
@@ -495,12 +544,23 @@ bool CofnijRuch() {
             StosWidoczny.push_back(KolumnyGry[ostatniRuch.CelIndex].back());
             KolumnyGry[ostatniRuch.CelIndex].pop_back();
 
-            // Ustaw w kolumnie docelowej: tylko wierzchnia karta odkryta, reszta zakryta
+            // Popraw stan odkrycia w kolumnie docelowej
             if (!KolumnyGry[ostatniRuch.CelIndex].empty()) {
-                for (size_t i = 0; i < KolumnyGry[ostatniRuch.CelIndex].size() - 1; i++) {
+                size_t pierwszaOdkryta = 0;
+                for (size_t i = 0; i < KolumnyGry[ostatniRuch.CelIndex].size(); i++) {
+                    if (i == KolumnyGry[ostatniRuch.CelIndex].size() - 1) {
+                        KolumnyGry[ostatniRuch.CelIndex][i].JestOdkryta = true;
+                    } else if (!MoznaPolozyc(KolumnyGry[ostatniRuch.CelIndex][i], KolumnyGry[ostatniRuch.CelIndex][i + 1])) {
+                        pierwszaOdkryta = i + 1;
+                        break;
+                    }
+                }
+                for (size_t i = 0; i < pierwszaOdkryta; i++) {
                     KolumnyGry[ostatniRuch.CelIndex][i].JestOdkryta = false;
                 }
-                KolumnyGry[ostatniRuch.CelIndex].back().JestOdkryta = true;
+                for (size_t i = pierwszaOdkryta; i < KolumnyGry[ostatniRuch.CelIndex].size(); i++) {
+                    KolumnyGry[ostatniRuch.CelIndex][i].JestOdkryta = true;
+                }
             }
         }
     } else if (ostatniRuch.ZrodloTyp == 1 && ostatniRuch.CelTyp == 1) {
