@@ -68,10 +68,11 @@
 
 **Pasjans: Odpowiada za główną logikę gry, w tym zarządzanie kartami i zasadami.**
 
-# **Projekt stworzony na potrzeby etapu pół-finałowego Gigathonu 2025.
-
 **Menu: Zarządza interfejsem menu głównego oraz funkcjami dodatkowymi, takimi jak zapis wyników czy tryb debugowania.**
 
 # **Kontakt**
 
 **W razie wystąpienia problemów lub dodatkowych pytań proszę o kontakt za pośrednictwem poczty e-mail `PiotrChaberka@proton.me` lub discord `axello1`. Miłej gry!**
+
+
+# **Projekt stworzony na potrzeby etapu pół-finałowego Gigathonu 2025.
