@@ -68,6 +68,8 @@
 
 **Pasjans: Odpowiada za główną logikę gry, w tym zarządzanie kartami i zasadami.**
 
+# **Projekt stworzony na potrzeby etapu pół-finałowego Gigathonu 2025.
+
 **Menu: Zarządza interfejsem menu głównego oraz funkcjami dodatkowymi, takimi jak zapis wyników czy tryb debugowania.**
 
 # **Kontakt**
