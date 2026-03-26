@@ -75,4 +75,4 @@
 **W razie wystąpienia problemów lub dodatkowych pytań proszę o kontakt za pośrednictwem poczty e-mail `PiotrChaberka@proton.me` lub discord `axello1`. Miłej gry!**
 
 
-# **Projekt stworzony na potrzeby etapu pół-finałowego Gigathonu 2025.
+# **Projekt stworzony na potrzeby etapu pół-finałowego Gigathonu 2025.**
